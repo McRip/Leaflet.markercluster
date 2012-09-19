@@ -538,13 +538,16 @@ L.MarkerClusterGroup.include(!L.DomUtil.TRANSITION ? {
 	_animationZoomIn: function (previousZoomLevel, newZoomLevel) {
 		this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds, previousZoomLevel);
 		this._topClusterLevel._recursivelyAddChildrenToMap(null, newZoomLevel, this._getExpandedVisibleBounds());
+        this._map.fire('afterClustering');
 	},
 	_animationZoomOut: function (previousZoomLevel, newZoomLevel) {
 		this._topClusterLevel._recursivelyRemoveChildrenFromMap(this._currentShownBounds, previousZoomLevel);
 		this._topClusterLevel._recursivelyAddChildrenToMap(null, newZoomLevel, this._getExpandedVisibleBounds());
+        this._map.fire('afterClustering');
 	},
 	_animationAddLayer: function (layer, newCluster) {
 		this._animationAddLayerNonAnimated(layer, newCluster);
+        this._map.fire('afterClustering');
 	}
 } : {
 
@@ -559,6 +562,7 @@ L.MarkerClusterGroup.include(!L.DomUtil.TRANSITION ? {
 		}
 		this._inZoomAnimation--;
 		this.fire('animationend');
+        this._map.fire('afterClustering');
 	},
 	_animationZoomIn: function (previousZoomLevel, newZoomLevel) {
 		var me = this,
